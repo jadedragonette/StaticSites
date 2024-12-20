@@ -1,6 +1,6 @@
 import unittest
 
-from leafnode import *
+from htmlnode import *
 
 class TestLeafNode(unittest.TestCase):
     def test_eq(self):
