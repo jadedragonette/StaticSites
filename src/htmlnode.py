@@ -35,8 +35,10 @@ class LeafNode(HTMLNode):
             return f"<img {self.props_to_html()} alt={self.value}>"
 
 class ParentNode(HTMLNode):
-    def __init__(self, tag, value, children, props):
-        super().__init__(tag, value, children, props)
+    def __init__(self, tag, children, props=None):
+        self.tag = tag
+        self.children = children
+        self.props = props
     
     def to_html(self):
         string = ""
@@ -44,9 +46,9 @@ class ParentNode(HTMLNode):
             raise ValueError("No tag present")
         if self.children == None:
             raise ValueError("No children present")
-        def build_the_string():
+        def build_the_string(self):
             if self.children == None:
                 return string
             string += self.children[0]
             return build_the_string(self.children[1:])
-        return 
+        return
