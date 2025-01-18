@@ -17,7 +17,7 @@ def text_node_to_html_node(text_node):
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
 #   gotta figure this out still, brain still overwork-exhausted. Yay me
-#   With all luck, I'll be up to properly working on this again in a few days - in the meantime, another cheatery comment update. Blahblahblahblahblahblah. last one.
+#   With all luck, I'll be up to properly working on this again in a few days - in the meantime, another cheatery comment update. Blahblahblahblahblahblah. last one. I lied but tomorrow's another day.
     split = old_nodes.split(delimiter)
     return
 
