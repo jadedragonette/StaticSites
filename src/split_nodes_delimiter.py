@@ -156,7 +156,7 @@ def markdown_to_html_node(markdown):
     for item in step_one:
         test = block_to_block_type(item)
         if test == "block_type_heading":
-#           gonna be here a while, might as well get comfortable...quick addition for the streak
+#           gonna be here a while, might as well get comfortable...quick addition for the streak, and once again
             if item.startswith("# "):
                 tag = h1
             if item.startswith("## "):
