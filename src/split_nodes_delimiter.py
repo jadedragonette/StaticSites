@@ -153,7 +153,6 @@ def text_to_children(text):
 def markdown_to_html_node(markdown):
     step_one = markdown_to_blocks(markdown)
     final = []
-    #  blach
     for item in step_one:
         test = block_to_block_type(item)
         if test == "block_type_heading":
