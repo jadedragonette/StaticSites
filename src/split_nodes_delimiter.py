@@ -158,17 +158,17 @@ def markdown_to_html_node(markdown):
         test = block_to_block_type(item)
         if test == "block_type_heading":
             if item.startswith("# "):
-                tag = h1
+                tag = "h1"
             if item.startswith("## "):
-                tag = h2
+                tag = "h2"
             if item.startswith("### "):
-                tag = h3
+                tag = "h3"
             if item.startswith("#### "):
-                tag = h4
+                tag = "h4"
             if item.startswith("##### "):
-                tag = h5
+                tag = "h5"
             if item.startswith("###### "):
-                tag = h6
+                tag = "h6"
             clean = item.lstrip("#")
             final.append(HTMLNode(tag, None, text_to_children(clean), None))
                 
