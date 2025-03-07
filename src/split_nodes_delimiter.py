@@ -155,7 +155,7 @@ def markdown_to_html_node(markdown):
     final = []
     for item in step_one:
         test = block_to_block_type(item)
-        if test == "block_type_heading":
+        if test == block_type_heading:
             if item.startswith("# "):
                 tag = "h1"
             if item.startswith("## "):
@@ -171,13 +171,13 @@ def markdown_to_html_node(markdown):
             clean = item.lstrip("#")
             final.append(HTMLNode(tag, None, text_to_children(clean), None))
                 
-        if test == "block_type_code":
-            HTMLNode(code, item, )
-        if test == "block_type_quote":
-            HTMLNode (item, )
-        if test == "block_type_ulist":
-            HTMLNode(item, )
-        if test == "block_type_olist":
-            HTMLNode(item, )
-        if test == "block_type_paragraph":
-            HTMLNode(p, item, )
+        if test == block_type_code:
+            final.append(HTMLNode(code, item, ))
+        if test == block_type_quote:
+            final.append(HTMLNode (item, ))
+        if test == block_type_ulist:
+            final.append(HTMLNode(item, ))
+        if test == block_type_olist:
+            final.append(HTMLNode(item, ))
+        if test == block_type_paragraph:
+            final.append(HTMLNode(p, item, ))
