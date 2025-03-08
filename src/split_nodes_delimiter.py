@@ -1,6 +1,15 @@
 from htmlnode import *
 from textnode import *
+from enum import Enum
 import re
+
+class BlockType(Enum):
+    PARAGRAPH = "paragraph"
+    HEADING = "heading"
+    CODE = "code"
+    QUOTE = "quite"
+    OLIST = "ordered_list"
+    ULIST = "unordered_list"
 
 def text_node_to_html_node(text_node):
     if text_node.TextType == TextType.TEXT:
@@ -114,31 +123,26 @@ def block_to_block_type(block):
     lines = block.split("\n")
 
     if block.startswith(("# ", "## ", "### ", "#### ", "##### ", "###### ")):
-        return block_type_heading
+        return BlockType.HEADING
     if len(lines) > 1 and lines[0].startswith("```") and lines[-1].startswith("```"):
-        return block_type_code
+        return BlockType.CODE
     if block.startswith("> "):
         for line in lines:
             if not line.startswith(">"):
-                return block_type_paragraph
-        return block_type_quote
-    if block.startswith("* "):
-        for line in lines:
-            if not line.startswith("* "):
-                return block_type_paragraph
-        return block_type_ulist
+                return BlockType.PARAGRAPH
+        return BlockType.QUOTE
     if block.startswith("- "):
         for line in lines:
             if not line.startswith("- "):
-                return block_type_paragraph
-        return block_type_ulist
+                return BlockType.PARAGRAPH
+        return BlockType.ULIST
     if block.startswith("1. "):
         i = 1
         for line in lines:
             if not line.startswith(f"{i}. "):
-                return block_type_paragraph
-        return block_type_olist
-    return block_type_paragraph
+                return BlockType.PARAGRAPH
+        return BlockType.OLIST
+    return BlockType.PARAGRAPH
 
 def text_to_children(text):
     new_nodes = []
@@ -155,7 +159,7 @@ def markdown_to_html_node(markdown):
     final = []
     for item in step_one:
         test = block_to_block_type(item)
-        if test == block_type_heading:
+        if test == BlockType.HEADING:
             if item.startswith("# "):
                 tag = "h1"
             if item.startswith("## "):
@@ -172,7 +176,7 @@ def markdown_to_html_node(markdown):
             final.append(HTMLNode(tag, None, text_to_children(clean), None))
                 
         if test == block_type_code:
-            final.append(HTMLNode(code, item, ))
+            final.append(text_node_to_html_node(TextNode(code, item)))
         if test == block_type_quote:
             final.append(HTMLNode (item, ))
         if test == block_type_ulist:
