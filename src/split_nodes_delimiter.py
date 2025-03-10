@@ -176,7 +176,7 @@ def markdown_to_html_node(markdown):
             final.append(HTMLNode(tag, None, text_to_children(clean), None))
                 
         if test == block_type_code:
-            final.append(text_node_to_html_node(TextNode(code, item)))
+            final.append(text_node_to_html_node(TextNode(item, "code")))
         if test == block_type_quote:
             final.append(HTMLNode (item, ))
         if test == block_type_ulist:
