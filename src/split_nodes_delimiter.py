@@ -174,16 +174,17 @@ def markdown_to_html_node(markdown):
                 tag = "h6"
             clean = item.lstrip("#")
             final.append(HTMLNode(tag, None, text_to_children(clean), None))
-                asd;fhagasdf
-                
-        if test == block_type_code:
+
+        if test == BlockType.CODE:
+            clean = item.lstrip("```")
+            clean = item.
             final.append(text_node_to_html_node(TextNode(item, "code")))
-        if test == block_type_quote:
-            final.append(HTMLNode (item, ))
-        if test == block_type_ulist:
-            final.append(HTMLNode(item, ))
-        if test == block_type_olist:
-            final.append(HTMLNode(item, ))
-        if test == block_type_paragraph:
-            final.append(HTMLNode(p, item, ))
+        if test == BlockType.QUOTE:
+            final.append(HTMLNode (tag, None, text_to_children(item), ))
+        if test == BlockType.ULIST:
+            final.append(HTMLNode(tag, None, text_to_children(item), None))
+        if test == BlockType.OLIST:
+            final.append(HTMLNode(tag, None, text_to_children(item), None))
+        if test == BlockType.PARAGRAPH:
+            final.append(HTMLNode(tag, None, text_to_children(item), None))
         HTMLNode("div", None, final, None)
