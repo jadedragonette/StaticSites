@@ -21,9 +21,9 @@ def text_node_to_html_node(text_node):
     if text_node.TextType == TextType.CODE:
         return LeafNode("code", text_node.text)
     if text_node.TextType == TextType.LINK:
-        return LeafNode("a", text_node.text, {href:text_node.url})
+        return LeafNode("a", text_node.text, {"href":text_node.url})
     if text_node.TextType == TextType.IMAGE:
-        return LeafNode("img", "", {src:text_node.url, alt:text_node.text})
+        return LeafNode("img", "", {"src":text_node.url, "alt":text_node.text})
     raise ValueError(f"Invalid text type: {text_node.text_type}")
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
@@ -97,7 +97,7 @@ def split_nodes_link(old_nodes):
         for link in links:
             sections = original_text.split(f"[{link[0]}]({link[1]})", 1)
             if len(sections) != 2:
-                raiseValueError("Invalid markdown, link section not closed")
+                raise ValueError("Invalid markdown, link section not closed")
             if sections[0] != "":
                 final.append(TextNode(sections[0], TextType.TEXT))
             final.append(TextNode(link[0], TextType.LINK, link[1]))
@@ -107,7 +107,17 @@ def split_nodes_link(old_nodes):
     return final
 
 def text_to_textnodes(text):
-        return split_nodes_link(split_nodes_image(split_nodes_delimiter(split_nodes_delimiter(split_nodes_delimiter([TextNode(text, TextType.TEXT)], "**", TextType.BOLD), "*", TextType.ITALIC), '`', TextType.CODE)))
+        return split_nodes_link(
+            split_nodes_image(
+            split_nodes_delimiter(
+                split_nodes_delimiter(
+                    split_nodes_delimiter(
+                        [TextNode(text, TextType.TEXT)], "**", TextType.BOLD
+                        ), "*", TextType.ITALIC
+                    ), '`', TextType.CODE
+                )
+            )
+        )
 
 def markdown_to_blocks(markdown):
     final = []
@@ -176,15 +186,23 @@ def markdown_to_html_node(markdown):
             final.append(HTMLNode(tag, None, text_to_children(clean), None))
 
         if test == BlockType.CODE:
-            clean = item.lstrip("```")
-            clean = item.
-            final.append(text_node_to_html_node(TextNode(item, "code")))
+            clean = item.lstrip("`")
+            clean = item.rstrip("`")
+            final.append(text_node_to_html_node(TextNode(clean, "code")))
+
         if test == BlockType.QUOTE:
-            final.append(HTMLNode (tag, None, text_to_children(item), ))
+            tag = "blockquote"
+            final.append(HTMLNode (tag, None, text_to_children(item), None))
+
         if test == BlockType.ULIST:
+            tag = "ul"
             final.append(HTMLNode(tag, None, text_to_children(item), None))
+
         if test == BlockType.OLIST:
             final.append(HTMLNode(tag, None, text_to_children(item), None))
+
         if test == BlockType.PARAGRAPH:
+            tag = "p"
             final.append(HTMLNode(tag, None, text_to_children(item), None))
+
         HTMLNode("div", None, final, None)
