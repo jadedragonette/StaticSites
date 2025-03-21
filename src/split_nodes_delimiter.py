@@ -107,17 +107,13 @@ def split_nodes_link(old_nodes):
     return final
 
 def text_to_textnodes(text):
-        return split_nodes_link(
-            split_nodes_image(
-            split_nodes_delimiter(
-                split_nodes_delimiter(
-                    split_nodes_delimiter(
-                        [TextNode(text, TextType.TEXT)], "**", TextType.BOLD
-                        ), "*", TextType.ITALIC
-                    ), '`', TextType.CODE
-                )
-            )
-        )
+    nodes = [TextNode(text, TextType.TEXT)]
+    nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
+    nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
+    nodes = split_nodes_image(nodes)
+    nodes = split_nodes_link(nodes)
+    return nodes
 
 def markdown_to_blocks(markdown):
     final = []
@@ -192,14 +188,16 @@ def markdown_to_html_node(markdown):
 
         if test == BlockType.QUOTE:
             tag = "blockquote"
-            final.append(HTMLNode (tag, None, text_to_children(item), None))
+            final.append(HTMLNode (tag, None, text_to_children(item.rstrip(">")), None))
 
         if test == BlockType.ULIST:
-            tag = "ul"
-            final.append(HTMLNode(tag, None, text_to_children(item), None))
+            clean = []
+            for unorder in item:
+                clean.append(unorder.rstrip("-"))
+            final.append(HTMLNode("ul", None, HTMLNode("li", None, text_to_children(clean), None), None))
 
         if test == BlockType.OLIST:
-            final.append(HTMLNode(tag, None, text_to_children(item), None))
+            final.append(HTMLNode("ol", None, HTMLNode("li", None, text_to_children(item), None), None))
 
         if test == BlockType.PARAGRAPH:
             tag = "p"
