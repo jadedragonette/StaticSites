@@ -188,7 +188,6 @@ def markdown_to_html_node(markdown):
 
         if test == BlockType.QUOTE:
             tag = "blockquote"
-            blah
             final.append(HTMLNode (tag, None, text_to_children(item.rstrip(">")), None))
 
         if test == BlockType.ULIST:
