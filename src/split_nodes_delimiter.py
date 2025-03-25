@@ -137,6 +137,7 @@ def block_to_block_type(block):
             if not line.startswith(">"):
                 return BlockType.PARAGRAPH
         return BlockType.QUOTE
+    somethings still broked
     if block.startswith("- "):
         for line in lines:
             if not line.startswith("- "):
