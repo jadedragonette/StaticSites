@@ -196,8 +196,10 @@ def markdown_to_html_node(markdown):
 
         if test == BlockType.OLIST:
             clean = []
+            x = 1
             for order in item:
-                clean.append(order.lstrip(""))
+                clean.append(order.lstrip(x))
+                X += 1
             final.append(HTMLNode("ol", None, HTMLNode("li", None, text_to_children(item), None), None))
 
         if test == BlockType.PARAGRAPH:
