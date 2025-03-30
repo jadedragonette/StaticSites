@@ -186,15 +186,18 @@ def markdown_to_html_node(markdown):
 
         if test == BlockType.QUOTE:
             tag = "blockquote"
-            final.append(HTMLNode (tag, None, text_to_children(item.rstrip(">")), None))
+            final.append(HTMLNode(tag, None, text_to_children(item.rstrip(">")), None))
 
         if test == BlockType.ULIST:
             clean = []
             for unorder in item:
-                clean.append(unorder.rstrip("-"))
+                clean.append(unorder.lstrip("-"))
             final.append(HTMLNode("ul", None, HTMLNode("li", None, text_to_children(clean), None), None))
 
         if test == BlockType.OLIST:
+            clean = []
+            for order in item:
+                clean.append(order.lstrip(""))
             final.append(HTMLNode("ol", None, HTMLNode("li", None, text_to_children(item), None), None))
 
         if test == BlockType.PARAGRAPH:
