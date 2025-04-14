@@ -197,7 +197,7 @@ def markdown_to_html_node(markdown):
         if test == BlockType.OLIST:
             clean = []
             x = 1
-            for order in item:
+            for order in item: eeks
                 clean.append(order.lstrip(x))
                 X += 1
             final.append(HTMLNode("ol", None, HTMLNode("li", None, text_to_children(item), None), None))
@@ -207,3 +207,5 @@ def markdown_to_html_node(markdown):
             final.append(HTMLNode(tag, None, text_to_children(item), None))
 
         HTMLNode("div", None, final, None)
+
+        #sometimes progress means nothing
