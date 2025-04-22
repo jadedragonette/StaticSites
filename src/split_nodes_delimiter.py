@@ -207,5 +207,3 @@ def markdown_to_html_node(markdown):
             final.append(HTMLNode(tag, None, text_to_children(item), None))
 
         HTMLNode("div", None, final, None)
-
-        #sometimes progress means nothing
