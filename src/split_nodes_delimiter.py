@@ -182,7 +182,9 @@ def markdown_to_html_node(markdown):
             final.append(HTMLNode(tag, None, text_to_children(clean), None))
 
         if test == BlockType.CODE:
-            final.append(text_node_to_html_node(TextNode(item, "code")))
+            clean = item.lstrip("`")
+            clean = item.rstrip("`")
+            final.append(text_node_to_html_node(TextNode(clean, "code")))
 
         if test == BlockType.QUOTE:
             tag = "blockquote"
